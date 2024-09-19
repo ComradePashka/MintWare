@@ -46,4 +46,5 @@ anchor/target/.rustc_info.json
 !anchor/target/idl/*.json
 !anchor/target/types/*.ts
 test-ledger
-.yarn
+
+#.yarn
