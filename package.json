@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "engines": {
-    "node": "22.x"
+    "node": "22.x",
+    "yarn": "1.22"
   },
   "scripts": {
     "anchor": "nx run anchor:anchor",
