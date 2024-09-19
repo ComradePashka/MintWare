@@ -12,7 +12,7 @@
     "anchor-localnet": "nx run anchor:anchor localnet",
     "anchor-test": "nx run anchor:anchor test",
     "feature": "nx generate @solana-developers/preset-react:feature",
-    "build": "nx build MintWare",
+    "build-nx": "nx build MintWare",
     "dev": "nx serve MintWare"
   },
   "private": true,
