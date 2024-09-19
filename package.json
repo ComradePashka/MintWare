@@ -2,6 +2,9 @@
   "name": "@mint-ware/source",
   "version": "0.0.0",
   "license": "MIT",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "anchor": "nx run anchor:anchor",
     "anchor-build": "nx run anchor:anchor build",
