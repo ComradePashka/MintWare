@@ -15,6 +15,10 @@ import {
 } from '../cluster/cluster-ui';
 import toast, { Toaster } from 'react-hot-toast';
 
+import { useWallet } from '@solana/wallet-adapter-react'; // Or @jup-ag/wallet-adapter;
+import { init, syncProps } from '@jup-ag/terminal';
+import "@jup-ag/terminal/css";
+
 export function UiLayout({
   children,
   links,
@@ -22,7 +26,26 @@ export function UiLayout({
   children: ReactNode;
   links: { label: string; path: string }[];
 }) {
+
+
   const pathname = usePathname();
+
+
+  const walletContextState = useWallet()
+
+  useEffect(() => {
+    init({
+      displayMode: 'integrated',
+      integratedTargetId: 'integrated-terminal',
+      endpoint: 'https://api.mainnet-beta.solana.com',
+    });
+  }, []);
+  
+  useEffect(() => {
+    syncProps({ passthroughWalletContextState: walletContextState })
+  }, [walletContextState]);
+
+
 
   return (
     <div className="h-full flex flex-col">
