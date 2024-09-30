@@ -24,6 +24,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <script src="https://terminal.jup.ag/main-v3.js" data-preload />
+      </head>
       <body>
         <ReactQueryProvider>
           <ClusterProvider>

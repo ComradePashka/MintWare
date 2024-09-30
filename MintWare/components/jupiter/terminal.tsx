@@ -1,26 +1,31 @@
 'use client';
 
-
 import React, { useEffect } from 'react';
 
 import { useWallet } from '@solana/wallet-adapter-react'; // Or @jup-ag/wallet-adapter;
-import { init, syncProps } from '@jup-ag/terminal';
-import "@jup-ag/terminal/css";
 
 const JupiterTerminalWidget = () => {
     const walletContextState = useWallet()
 
     useEffect(() => {
-        init({
-        displayMode: 'integrated',
-        integratedTargetId: 'integrated-terminal',
-        endpoint: 'https://api.mainnet-beta.solana.com',
+        window.Jupiter.init({ 
+            displayMode: 'integrated',
+            integratedTargetId: 'integrated-terminal',
+            endpoint: 'https://api.mainnet-beta.solana.com',
+            enableWalletPassthrough: true 
         });
+        // init({
+        // displayMode: 'integrated',
+        // integratedTargetId: 'integrated-terminal',
+        // endpoint: 'https://api.mainnet-beta.solana.com',
+        // });
     }, []);
     
     useEffect(() => {
-        syncProps({ passthroughWalletContextState: walletContextState })
-    }, [walletContextState]);
+        if (!window.Jupiter.syncProps) return;
+        window.Jupiter.syncProps({ passthroughWalletContextState: walletContextState });
+//        syncProps({ passthroughWalletContextState: walletContextState })
+    }, [walletContextState.connected]);
 
     return <div id="integrated-terminal"></div>;
 };
