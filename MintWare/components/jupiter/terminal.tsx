@@ -1,6 +1,5 @@
 'use client';
 
-
 import React, { useEffect } from 'react';
 
 import { useWallet } from '@solana/wallet-adapter-react'; // Or @jup-ag/wallet-adapter;
