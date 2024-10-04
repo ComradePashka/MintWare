@@ -1,45 +1,21 @@
-'use server';
+'use client';
 
-import { PrismaClient, Project } from '@prisma/client'
+import useSWR from "swr";
+
 //import { useEffect, useState } from 'react';
 
-const prisma = new PrismaClient()
 
-export default async function ProjectList() {
-    let projects: Project[]
+const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
-//    const [projects, setProjects] = useState<Project[]>([]);
-
-  //  useEffect(() => {
-        console.log('Inside useEffect!!!')
-        async function main() {
-//            const ret = await prisma.project.findMany()
-            console.log(projects)
-//            setProjects(projects)
-            return prisma.project.findMany()
-        }
-        console.log('Running main()...')
-        projects = await main()
-            .then(async (r) => {
-            console.log('got data! disconnecting!')
-            await prisma.$disconnect()
-            return r
-            })
-            .catch(async (e) => {
-            console.error(e)
-            await prisma.$disconnect()
-            process.exit(1)
-            })
-        console.log('Waiting for main() results...')
-//    }, [])
-
-    console.log('Projects are:' , projects)
+export default function ProjectList() {
+  const { data: projects, error } = useSWR('/api/projects', fetcher)
+  if (error) return <div>An error occured.</div>
+  if (!projects) return <div>Loading ...</div>
 
   return (
     <div className="hero py-[64px]">
         <div className="hero-content text-center">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                { projects ? (
                 <div>
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -90,10 +66,6 @@ export default async function ProjectList() {
                     </ul>
                 </nav>
                 </div>
-                ) : (
-                    <div>No DATA!!!</div>
-                )
-                }
             </div>
         </div>
     </div>
