@@ -13,15 +13,17 @@ export default async function ProjectList() {
   //  useEffect(() => {
         console.log('Inside useEffect!!!')
         async function main() {
-            projects = await prisma.project.findMany()
+//            const ret = await prisma.project.findMany()
             console.log(projects)
 //            setProjects(projects)
+            return prisma.project.findMany()
         }
-        console.log('Runing main()...')
-        await main()
-            .then(async () => {
+        console.log('Running main()...')
+        projects = await main()
+            .then(async (r) => {
             console.log('got data! disconnecting!')
             await prisma.$disconnect()
+            return r
             })
             .catch(async (e) => {
             console.error(e)
