@@ -4,7 +4,7 @@ import useSWR from "swr";
 
 //import { useEffect, useState } from 'react';
 
-
+//@ts-expect-error need fetcher
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 export default function ProjectList() {
