@@ -5,10 +5,10 @@ import useSWR from "swr";
 //import { useEffect, useState } from 'react';
 
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
+//const fetcher = (...args: any[]) => fetch(args).then((res) => res.json())
 
 export default function ProjectList() {
-  const { data: projects, error } = useSWR('/api/projects', fetcher)
+  const { data: projects, error } = useSWR('/api/projects', fetch)
   if (error) return <div>An error occured.</div>
   if (!projects) return <div>Loading ...</div>
 
