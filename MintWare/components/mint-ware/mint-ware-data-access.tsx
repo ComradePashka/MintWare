@@ -1,7 +1,6 @@
 'use client';
 
 import { getMintWareProgram, getMintWareProgramId } from '@mint-ware/anchor';
-import { Program } from '@coral-xyz/anchor';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { Cluster, Keypair, PublicKey } from '@solana/web3.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -24,7 +23,7 @@ export function useMintWareProgram() {
 
   const accounts = useQuery({
     queryKey: ['mint-ware', 'all', { cluster }],
-    queryFn: () => program.account.mintWare.all(),
+    queryFn: () => program.account.rewards.all(),
   });
 
   const getProgramAccount = useQuery({
@@ -33,18 +32,19 @@ export function useMintWareProgram() {
   });
 
   const initialize = useMutation({
-    mutationKey: ['mint-ware', 'initialize', { cluster }],
+    mutationKey: ['mint-ware', 'create', { cluster }],
     mutationFn: (keypair: Keypair) =>
       program.methods
-        .initialize()
-        .accounts({ mintWare: keypair.publicKey })
+        .create("Test Rewards Pool", "Test Description")
+        .accounts({ user : keypair.publicKey })
         .signers([keypair])
         .rpc(),
     onSuccess: (signature) => {
       transactionToast(signature);
       return accounts.refetch();
     },
-    onError: () => toast.error('Failed to initialize account'),
+    onError: () =>
+      toast.error('Failed to initialize account'),
   });
 
   return {
@@ -63,54 +63,10 @@ export function useMintWareProgramAccount({ account }: { account: PublicKey }) {
 
   const accountQuery = useQuery({
     queryKey: ['mint-ware', 'fetch', { cluster, account }],
-    queryFn: () => program.account.mintWare.fetch(account),
-  });
-
-  const closeMutation = useMutation({
-    mutationKey: ['mint-ware', 'close', { cluster, account }],
-    mutationFn: () =>
-      program.methods.close().accounts({ mintWare: account }).rpc(),
-    onSuccess: (tx) => {
-      transactionToast(tx);
-      return accounts.refetch();
-    },
-  });
-
-  const decrementMutation = useMutation({
-    mutationKey: ['mint-ware', 'decrement', { cluster, account }],
-    mutationFn: () =>
-      program.methods.decrement().accounts({ mintWare: account }).rpc(),
-    onSuccess: (tx) => {
-      transactionToast(tx);
-      return accountQuery.refetch();
-    },
-  });
-
-  const incrementMutation = useMutation({
-    mutationKey: ['mint-ware', 'increment', { cluster, account }],
-    mutationFn: () =>
-      program.methods.increment().accounts({ mintWare: account }).rpc(),
-    onSuccess: (tx) => {
-      transactionToast(tx);
-      return accountQuery.refetch();
-    },
-  });
-
-  const setMutation = useMutation({
-    mutationKey: ['mint-ware', 'set', { cluster, account }],
-    mutationFn: (value: number) =>
-      program.methods.set(value).accounts({ mintWare: account }).rpc(),
-    onSuccess: (tx) => {
-      transactionToast(tx);
-      return accountQuery.refetch();
-    },
+    queryFn: () => program.account.rewards.fetch(account),
   });
 
   return {
     accountQuery,
-    closeMutation,
-    decrementMutation,
-    incrementMutation,
-    setMutation,
   };
 }

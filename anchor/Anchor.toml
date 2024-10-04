@@ -5,7 +5,7 @@ anchor_version = "0.30.1"
 seeds = false
 skip-lint = false
 
-[programs.localnet]
+[programs.devnet]
 mint_ware = "3ELXEaKAsaA6yuEo9PwbVKSWZCaPjHcBpoXoDXndX4j3"
 
 [registry]

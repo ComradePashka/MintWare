@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/mint_ware.json`.
  */
 export type MintWare = {
-  "address": "J8CDXq657QtTaSP7x7xeUPeuJd8Eta2icZzNx5p8BK4T",
+  "address": "3ELXEaKAsaA6yuEo9PwbVKSWZCaPjHcBpoXoDXndX4j3",
   "metadata": {
     "name": "mintWare",
     "version": "0.1.0",
