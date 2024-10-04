@@ -6,13 +6,13 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-mint_ware = "J8CDXq657QtTaSP7x7xeUPeuJd8Eta2icZzNx5p8BK4T"
+mint_ware = "3ELXEaKAsaA6yuEo9PwbVKSWZCaPjHcBpoXoDXndX4j3"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
