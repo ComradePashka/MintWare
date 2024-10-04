@@ -1,5 +1,6 @@
 'use client';
 
+import { Project } from "@prisma/client";
 import useSWR from "swr";
 
 //import { useEffect, useState } from 'react';
@@ -8,9 +9,9 @@ import useSWR from "swr";
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 export default function ProjectList() {
-  const { data: projects, error } = useSWR('/api/projects', fetcher)
+  const { data, error } = useSWR('/api/projects', fetcher)
   if (error) return <div>An error occured.</div>
-  if (!projects) return <div>Loading ...</div>
+  if (!data) return <div>Loading ...</div>
 
   return (
     <div className="hero py-[64px]">
@@ -27,7 +28,7 @@ export default function ProjectList() {
                         </tr>
                     </thead>
                     <tbody>
-                        { projects.map(({id, name, description, tokenMint}) => (
+                        { data.projects.map(({id, name, description, tokenMint} : Project) => (
                             <tr key={id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td className="w-4 p-4">{id}</td>
                                 <th className="px-6 py-4">{name}</th>
