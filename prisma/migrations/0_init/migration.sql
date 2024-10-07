@@ -2,10 +2,10 @@
 CREATE TABLE `Project` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
-    `descriptoin` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NOT NULL,
     `tokenMint` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `Project_descriptoin_key`(`descriptoin`),
+    UNIQUE INDEX `Project_description_key`(`description`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
