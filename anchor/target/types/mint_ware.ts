@@ -5,108 +5,176 @@
  * IDL can be found at `target/idl/mint_ware.json`.
  */
 export type MintWare = {
-  address: 'J8CDXq657QtTaSP7x7xeUPeuJd8Eta2icZzNx5p8BK4T';
-  metadata: {
-    name: 'mintWare';
-    version: '0.1.0';
-    spec: '0.1.0';
-    description: 'Created with Anchor';
-  };
-  instructions: [
+  "address": "3ELXEaKAsaA6yuEo9PwbVKSWZCaPjHcBpoXoDXndX4j3",
+  "metadata": {
+    "name": "mintWare",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
     {
-      name: 'close';
-      discriminator: [98, 165, 201, 177, 108, 65, 206, 96];
-      accounts: [
+      "name": "create",
+      "discriminator": [
+        24,
+        30,
+        200,
+        40,
+        5,
+        28,
+        7,
+        119
+      ],
+      "accounts": [
         {
-          name: 'payer';
-          writable: true;
-          signer: true;
-        },
-        {
-          name: 'mintWare';
-          writable: true;
-        }
-      ];
-      args: [];
-    },
-    {
-      name: 'decrement';
-      discriminator: [106, 227, 168, 59, 248, 27, 150, 101];
-      accounts: [
-        {
-          name: 'mintWare';
-          writable: true;
-        }
-      ];
-      args: [];
-    },
-    {
-      name: 'increment';
-      discriminator: [11, 18, 104, 9, 104, 174, 59, 33];
-      accounts: [
-        {
-          name: 'mintWare';
-          writable: true;
-        }
-      ];
-      args: [];
-    },
-    {
-      name: 'initialize';
-      discriminator: [175, 175, 109, 31, 13, 152, 155, 237];
-      accounts: [
-        {
-          name: 'payer';
-          writable: true;
-          signer: true;
-        },
-        {
-          name: 'mintWare';
-          writable: true;
-          signer: true;
-        },
-        {
-          name: 'systemProgram';
-          address: '11111111111111111111111111111111';
-        }
-      ];
-      args: [];
-    },
-    {
-      name: 'set';
-      discriminator: [198, 51, 53, 241, 116, 29, 126, 194];
-      accounts: [
-        {
-          name: 'mintWare';
-          writable: true;
-        }
-      ];
-      args: [
-        {
-          name: 'value';
-          type: 'u8';
-        }
-      ];
-    }
-  ];
-  accounts: [
-    {
-      name: 'mintWare';
-      discriminator: [135, 64, 223, 168, 233, 143, 162, 215];
-    }
-  ];
-  types: [
-    {
-      name: 'mintWare';
-      type: {
-        kind: 'struct';
-        fields: [
-          {
-            name: 'count';
-            type: 'u8';
+          "name": "rewards",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  82,
+                  69,
+                  87,
+                  65,
+                  82,
+                  68,
+                  83
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
           }
-        ];
-      };
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "fund",
+      "discriminator": [
+        218,
+        188,
+        111,
+        221,
+        152,
+        113,
+        174,
+        7
+      ],
+      "accounts": [
+        {
+          "name": "rewards",
+          "writable": true
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "discriminator": [
+        183,
+        18,
+        70,
+        156,
+        148,
+        109,
+        161,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "rewards",
+          "writable": true
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
     }
-  ];
+  ],
+  "accounts": [
+    {
+      "name": "rewards",
+      "discriminator": [
+        12,
+        223,
+        68,
+        101,
+        63,
+        33,
+        38,
+        101
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "rewards",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "rewardsPool",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ]
 };
