@@ -21,3 +21,11 @@ body {
 .wallet-adapter-button {
   font-family: inherit !important;
 }
+
+
+.dev-wrapper {
+  background-image: url('/dev.png');
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  padding-left: 25px;
+}
