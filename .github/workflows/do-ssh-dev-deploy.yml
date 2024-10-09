@@ -1,0 +1,33 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: https://dev.mintware.org/
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@master
+      - name: Install dependencies 👨🏻‍💻
+        run: npm i
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIV_KEY }}" > ~/.ssh/id_ed25519
+          echo "${{ secrets.SSH_PUB_KEY }}" > ~/.ssh/id_ed25519.pub
+          chmod u+rw ~/.ssh/id_ed25519*
+          ssh-keyscan -H ${{ secrets.IP }} >> ~/.ssh/known_hosts
+      - name: Copy builds to server and restart pm2
+        run: |
+          pwd
+          ls -la
+          rsync -vrm  * ${{ secrets.USER_IP }}:/home/mintware/app
+          ssh ${{ secrets.USER_IP }} "cd MintWare ; pm2 restart 0"
