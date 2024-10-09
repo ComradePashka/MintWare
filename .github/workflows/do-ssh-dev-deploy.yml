@@ -16,6 +16,10 @@ jobs:
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@master
+      - name: Upgrade NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
       - name: Install dependencies 👨🏻‍💻
         run: npm i
       - name: Setup SSH
@@ -23,7 +27,7 @@ jobs:
           mkdir -p ~/.ssh/
           echo "${{ secrets.SSH_PRIV_KEY }}" > ~/.ssh/id_ed25519
           echo "${{ secrets.SSH_PUB_KEY }}" > ~/.ssh/id_ed25519.pub
-          chmod u+rw ~/.ssh/id_ed25519*
+          chmod 400 ~/.ssh/id_ed25519*
           ssh-keyscan -H ${{ secrets.IP }} >> ~/.ssh/known_hosts
       - name: Copy builds to server and restart pm2
         run: |
