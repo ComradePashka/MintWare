@@ -10,11 +10,12 @@ export const metadata = {
 };
 
 const links: { label: string; path: string, dev? : boolean }[] = [
+  { label: 'Dashboard', path: '/dashboard' },
   ... (process.env.NEXT_PUBLIC_NODE_ENV ?? process.env.NODE_ENV) == 'development' ? [
   { label: 'Account', path: '/account', dev: true },
   { label: 'Clusters', path: '/clusters', dev: true },
+  { label: 'MintWare Program', path: '/mint-ware', dev: true },
   ] : [],
-  { label: 'MintWare Program', path: '/mint-ware' },
 ];
 
 

@@ -8,19 +8,22 @@ datasource db {
 }
 
 model Project {
-  id             Int       @id @default(autoincrement())
-  authority      String    @db.VarChar(64)
-  name           String    @db.VarChar(64)
-  description    String    @db.VarChar(128)
-  token_mint     String    @db.VarChar(64)
-  reward_percent Int       @default(5) @db.TinyInt
-  Referal        Referal[]
+  id              Int       @id @default(autoincrement())
+  authority       String    @db.VarChar(64)
+  name            String    @db.VarChar(64)
+  description     String    @db.VarChar(128)
+  token_mint      String    @db.VarChar(64)
+  reward_percent  Int       @default(5) @db.TinyInt
+  tx              String    @db.VarChar(128)
+  tx_confirmed_at DateTime? @db.Timestamp(0)
+  Referal         Referal[]
 }
 
 model Referal {
   id         Int     @id @default(autoincrement())
-  url        String  @db.VarChar(128)
+  authority  String  @default("") @db.VarChar(64)
   project_id Int
+  url        String  @db.VarChar(128)
   Project    Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
 
   @@index([project_id], map: "Referal_project_id_fkey")
