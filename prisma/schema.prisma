@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,16 +8,23 @@ datasource db {
 }
 
 model Project {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String    @unique
-  tokenMint   String
-  referal     Referal[]
+  id              Int       @id @default(autoincrement())
+  authority       String    @db.VarChar(64)
+  name            String    @db.VarChar(64)
+  description     String    @db.VarChar(128)
+  token_mint      String    @db.VarChar(64)
+  reward_percent  Int       @default(5) @db.TinyInt
+  tx              String    @db.VarChar(128)
+  tx_confirmed_at DateTime? @db.Timestamp(0)
+  Referal         Referal[]
 }
 
 model Referal {
-  id          Int       @id @default(autoincrement())
-  url         String
-  project     Project  @relation(fields: [projectId], references: [id])
-  projectId   Int
+  id         Int     @id @default(autoincrement())
+  authority  String  @default("") @db.VarChar(64)
+  project_id Int
+  url        String  @db.VarChar(128)
+  Project    Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@index([project_id], map: "Referal_project_id_fkey")
 }

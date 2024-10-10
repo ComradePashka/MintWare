@@ -20,7 +20,7 @@ export function UiLayout({
   links,
 }: {
   children: ReactNode;
-  links: { label: string; path: string }[];
+  links: { label: string; path: string; dev?: boolean }[];
 }) {
 
 
@@ -35,8 +35,8 @@ export function UiLayout({
             <img className="h-4 md:h-6" alt="Logo" src="/logo.png" />
           </Link>
           <ul className="menu menu-horizontal px-1 space-x-2">
-            {links.map(({ label, path }) => (
-              <li key={path}>
+            {links.map(({ label, path, dev }) => (
+              <li key={path} className={dev ? 'dev-wrapper' : ''}>
                 <Link
                   className={pathname.startsWith(path) ? 'active' : ''}
                   href={path}

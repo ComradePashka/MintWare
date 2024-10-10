@@ -3,8 +3,6 @@
 import { Project } from "@prisma/client";
 import useSWR from "swr";
 
-//import { useEffect, useState } from 'react';
-
 //@ts-expect-error need fetcher
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
@@ -24,16 +22,20 @@ export default function ProjectList() {
                             <th scope="col" className="p-4">Id</th>
                             <th scope="col" className="px-6 py-3">Name</th>
                             <th scope="col" className="px-6 py-3">Description</th>
+                            <th scope="col" className="px-6 py-3">Reward %</th>
                             <th scope="col" className="px-6 py-3">Token MINT</th>
+                            <th scope="col" className="px-6 py-3">Authority</th>
                         </tr>
                     </thead>
                     <tbody>
-                        { data.map(({id, name, description, tokenMint} : Project) => (
+                        { data.map(({id, authority, name, description, token_mint, reward_percent} : Project) => (
                             <tr key={id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td className="w-4 p-4">{id}</td>
                                 <th className="px-6 py-4">{name}</th>
                                 <td className="px-6 py-4">{description}</td>
-                                <td className="px-6 py-4">{tokenMint}</td>
+                                <td className="px-6 py-4">{reward_percent}</td>
+                                <td className="px-6 py-4">{token_mint}</td>
+                                <td className="px-6 py-4">{authority}</td>
                             </tr>
                             )
                         )

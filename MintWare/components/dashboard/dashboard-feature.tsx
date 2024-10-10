@@ -11,9 +11,7 @@ const JupiterTerminalWidget = dynamic(
 export default function DashboardFeature() {
   return (
     <div>
-      <b>MintWare Swap</b>
       <ProjectList />
-      <JupiterTerminalWidget />
     </div>
   );
 }
