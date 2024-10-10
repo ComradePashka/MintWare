@@ -1,5 +1,15 @@
-import DashboardFeature from '@/components/dashboard/dashboard-feature';
+import ProjectList from '@/components/project/project-list'
+import dynamic from 'next/dynamic'
+ 
+const JupiterTerminalWidget = dynamic(
+  () => import('@/components/jupiter/terminal'),
+  { ssr: false }
+)
 
 export default function Page() {
-  return <DashboardFeature />;
+  return <div>
+    <ProjectList />
+    <JupiterTerminalWidget />
+  </div>
+
 }
