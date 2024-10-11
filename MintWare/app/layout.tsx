@@ -3,6 +3,7 @@ import { UiLayout } from '@/components/ui/ui-layout';
 import { ClusterProvider } from '@/components/cluster/cluster-data-access';
 import { SolanaProvider } from '@/components/solana/solana-provider';
 import { ReactQueryProvider } from './react-query-provider';
+import Script from 'next/script';
 
 export const metadata = {
   title: 'mint-ware',
@@ -10,11 +11,11 @@ export const metadata = {
 };
 
 const links: { label: string; path: string, dev? : boolean }[] = [
-  { label: 'Dashboard', path: '/dashboard' },
+  { label: 'List Your Token 🚀', path: '/' },
   ... (process.env.NEXT_PUBLIC_NODE_ENV ?? process.env.NODE_ENV) == 'development' ? [
-  { label: 'Account', path: '/account', dev: true },
-  { label: 'Clusters', path: '/clusters', dev: true },
-  { label: 'MintWare Program', path: '/mint-ware', dev: true },
+  { label: 'Leaderboard 📈', path: '/leaderboard', dev: true },
+  { label: 'Team Dashboard 🎯', path: '/team-dashboard', dev: true },
+  { label: 'Buy $MWT 💰', path: '/mint-ware', dev: true },
   ] : [],
 ];
 
@@ -28,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script src="https://terminal.jup.ag/main-v3.js" data-preload />
+      <Script async src="https://terminal.jup.ag/main-v3.js" data-preload />
       </head>
       <body>
         <ReactQueryProvider>
