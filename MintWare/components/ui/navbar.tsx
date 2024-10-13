@@ -2,8 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ReactElement } from 'react';
 import { usePathname } from 'next/navigation';
-import { WalletButton } from '../solana/solana-provider';
-import { ClusterUiSelect } from '../cluster/cluster-ui';
+import WalletButtonComponent from '../wallet/wallet';
+import CoinModalButtonComponent from '../coin/coin-modal-button';
 
 type NavbarProps = {
   links: { label: string; path: string; dev?: boolean }[];
@@ -22,7 +22,7 @@ export default function Navbar({ links }: NavbarProps): ReactElement {
             <li key={path} className={dev ? 'dev-wrapper' : ''}>
               <Link
                 className={`no-underline ${
-                  pathname === path ? 'text-[#5E74ED]' : 'text-[#505677]'
+                  pathname === path ? 'text-primary' : 'text-neutral'
                 }`}
                 href={path}
               >
@@ -33,8 +33,8 @@ export default function Navbar({ links }: NavbarProps): ReactElement {
         </ul>
       </div>
       <div className="flex-none space-x-2">
-        <WalletButton />
-        <ClusterUiSelect />
+        <CoinModalButtonComponent />
+        <WalletButtonComponent />
       </div>
     </div>
   );
