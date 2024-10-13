@@ -79,7 +79,7 @@ export default function Footer(): ReactElement {
             </div>
           </div>
           <div className="flex flex-col flex-1 items-end">
-            <button className="h-[46px] w-[160px] btn btn-primary text-white rounded rounded-tl-[16px] rounded-tr-[40px] rounded-bl-[40px] rounded-br-[16px]">
+            <button className="h-[46px] w-[160px] btn btn-primary text-white rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
               Request a call
             </button>
             <p className="text-xs font-normal text-right text-[#292626] mt-[16px]">
