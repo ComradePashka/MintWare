@@ -1,86 +1,86 @@
 #![allow(clippy::result_large_err)]
 use anchor_lang::prelude::*;
 use anchor_lang::solana_program::entrypoint::ProgramResult;
+use anchor_spl::token::{Token, TokenAccount};
 
 declare_id!("3ELXEaKAsaA6yuEo9PwbVKSWZCaPjHcBpoXoDXndX4j3");
 
 #[program]
 pub mod mint_ware {
-  use super::*;
 
-  pub fn create(ctx: Context<Create>, name: String, description: String) -> ProgramResult {
-    let rewards = &mut ctx.accounts.rewards;
-    rewards.name = name;
-    rewards.description = description;
-    rewards.rewards_pool = 0;
-    rewards.admin = *ctx.accounts.user.key;
-    Ok(())
-  }
+    use anchor_lang::solana_program::program::invoke;
+    use anchor_spl::token::spl_token;
 
-  pub fn withdraw(ctx: Context<Withdraw>, amount: u64) -> ProgramResult {
-    let rewards = &mut ctx.accounts.rewards;
-    let user = &mut ctx.accounts.user;
+    use super::*;
 
-    if rewards.admin != *user.key {
-      return Err(ProgramError::IncorrectProgramId);
+    pub fn create(ctx: Context<Create>, name: String, description: String) -> ProgramResult {
+        let rewards = &mut ctx.accounts.rewards;
+        rewards.name = name;
+        rewards.description = description;
+        rewards.rewards_pool = 0;
+        rewards.admin = *ctx.accounts.user.key;
+        rewards.rewards_pool_mint_address = *ctx.accounts.token_program.to_account_info().key;
+        Ok(())
     }
-    let rent_balance = Rent::get()?.minimum_balance(rewards.to_account_info().data_len());
-    if **rewards.to_account_info().lamports.borrow() -rent_balance < amount {
-      return Err(ProgramError::InsufficientFunds);
+
+    pub fn fund(ctx: Context<Fund>, amount: u64) -> ProgramResult {
+        let _rewards = &mut ctx.accounts.rewards;
+        let token_program = ctx.accounts.token_program.to_account_info();
+        let sender_ata = ctx.accounts.sender_ata.to_account_info();
+        let rewards_ata = ctx.accounts.rewards_ata.to_account_info();
+        let sender = ctx.accounts.sender.clone();
+
+        let ix = spl_token::instruction::transfer(
+            token_program.key,
+            sender_ata.key,
+            rewards_ata.key,
+            &sender.key,
+            &[],
+            amount,
+        )?;
+
+        let _ = invoke(
+            &ix,
+            &[
+                sender_ata,
+                rewards_ata,
+                sender.to_account_info(),
+                token_program,
+            ],
+        );
+
+        Ok(())
     }
-    **rewards.to_account_info().try_borrow_mut_lamports()? -= amount;
-    **user.to_account_info().try_borrow_mut_lamports()? += amount;
-
-    Ok(())
-  }
-
-  pub fn fund(ctx: Context<Fund>, amount: u64) -> ProgramResult {
-    let ix = anchor_lang::solana_program::system_instruction::transfer(
-      &ctx.accounts.user.key(),
-      &ctx.accounts.rewards.key(),
-      amount
-    );
-    let _ = anchor_lang::solana_program::program::invoke(
-      &ix,
-      &[
-        ctx.accounts.user.to_account_info(),
-        ctx.accounts.rewards.to_account_info(),
-      ]);
-    (&mut ctx.accounts.rewards).rewards_pool += amount;
-    Ok(())
-  }
 }
 
 #[derive(Accounts)]
 pub struct Create<'info> {
-  #[account(init, payer = user, space = 9000, seeds = [b"REWARDS".as_ref(), user.key().as_ref()], bump)]
-  pub rewards: Account<'info, Rewards>,
-  #[account(mut)]
-  pub user: Signer<'info>,
-  pub system_program: Program<'info, System>,
-}
-
-#[derive(Accounts)]
-pub struct Withdraw<'info> {
-  #[account(mut)]
-  pub rewards: Account<'info, Rewards>,
-  #[account(mut)]
-  pub user: Signer<'info>,
+    #[account(init, payer = user, space = 9000, seeds = [b"REWARDS".as_ref(), user.key().as_ref()], bump)]
+    pub rewards: Account<'info, Rewards>,
+    #[account(mut)]
+    pub user: Signer<'info>,
+    pub system_program: Program<'info, System>,
+    pub token_program: Program<'info, Token>,
 }
 
 #[derive(Accounts)]
 pub struct Fund<'info> {
-  #[account(mut)]
-  pub rewards: Account<'info, Rewards>,
-  #[account(mut)]
-  pub user: Signer<'info>,
-  pub system_program: Program<'info, System>,
+    pub sender: Signer<'info>,
+    #[account(mut)]
+    pub rewards: Account<'info, Rewards>,
+    #[account(mut)]
+    pub sender_ata: Account<'info, TokenAccount>,
+    #[account(mut)]
+    pub rewards_ata: Account<'info, TokenAccount>,
+    pub system_program: Program<'info, System>,
+    pub token_program: Program<'info, Token>,
 }
 
 #[account]
 pub struct Rewards {
-  pub admin: Pubkey,
-  pub name: String,
-  pub description: String,
-  pub rewards_pool: u64
+    pub admin: Pubkey,
+    pub name: String,
+    pub description: String,
+    pub rewards_pool: u64,
+    pub rewards_pool_mint_address: Pubkey, // For validations later (To be added later)
 }
