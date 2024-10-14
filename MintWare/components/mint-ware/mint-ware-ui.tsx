@@ -9,6 +9,7 @@ import {
   useMintWareProgramAccount,
 } from './mint-ware-data-access';
 import { ClusterNetwork } from '../cluster/cluster-data-access';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export function MintWareCreate() {
   const { initialize } = useMintWareProgram();
@@ -34,7 +35,6 @@ export function MintWareCreate() {
 }
 
 
-
 export function MintWareCreateProjectModal({
   hideModal,
   show,
@@ -42,10 +42,14 @@ export function MintWareCreateProjectModal({
   hideModal: () => void;
   show: boolean;
 }) {
+  const { publicKey, sendTransaction, wallet } = useWallet()
+  
   const { initialize } = useMintWareProgram();
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
+  console.log("WALLLLLLET", publicKey, sendTransaction, wallet)
 
   return (
     <AppModal

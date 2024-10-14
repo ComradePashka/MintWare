@@ -36,8 +36,14 @@ export function useMintWareProgram() {
     mutationFn: ({keypair, name, description} : {keypair: Keypair, name: string, description: string}) =>
       program.methods
         .create(name, description)
-        .accounts({ user : keypair.publicKey })
-        .signers([keypair])
+        //TODO: fugure our how to reuse signer for PDA creation
+        // .accountsStrict({
+        //   rewards: associatedAddress,
+        //   user: keypair.publicKey,
+        //   systemProgram : SystemProgram,
+        // })
+       .accounts({ user : keypair.publicKey })
+       .signers([keypair])
         .rpc(),
     onSuccess: (signature) => {
       transactionToast(signature);
