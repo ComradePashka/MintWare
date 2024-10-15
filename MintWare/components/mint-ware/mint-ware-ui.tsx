@@ -48,6 +48,8 @@ export function MintWareCreateProjectModal({
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [rewardPercent, setRewardPercent] = useState('');
+  const [amount, setAmount] = useState('');
 
   console.log("WALLLLLLET", publicKey, sendTransaction, wallet)
 
@@ -57,7 +59,7 @@ export function MintWareCreateProjectModal({
       hide={hideModal}
       show={show}
       submit={() => {
-        initialize.mutateAsync({keypair: Keypair.generate(), name, description})
+        initialize.mutateAsync({keypair: Keypair.generate(), name, description, rewardPercent, })
         // hideModal();
       }}
       submitLabel="Save"

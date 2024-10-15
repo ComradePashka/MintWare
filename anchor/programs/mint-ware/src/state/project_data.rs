@@ -1,27 +1,25 @@
-use crate::constants::*;
 use anchor_lang::prelude::*;
 
 #[account]
-pub struct Project {
+pub struct ProjectData {
     pub authority: Pubkey,
     pub name: String,
-    // Examples from game project
-    // pub level: u8,
-    // pub xp: u64,
-    // pub wood: u64,
-    // pub energy: u64,
+    pub description: String,
+    pub token_mint: Pubkey,
+    // pub pool_ata: Pubkey,
+    // pub signer_ata: Pubkey,
+    pub reward_percent: u8
     // pub last_login: i64,
-    // pub last_id: u16,
 }
 
-impl Project {
+impl ProjectData {
     pub fn print(&mut self) -> Result<()> {
         // Note that logging costs a lot of compute. So don't use it too much.
         msg!(
-            "Authority: {} Wood: {} Energy: {}",
+            "Authority: {} Name: {} Description: {}",
             self.authority,
-            self.wood,
-            self.energy
+            self.name,
+            self.description
         );
         Ok(())
     }

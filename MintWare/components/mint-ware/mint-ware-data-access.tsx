@@ -23,7 +23,7 @@ export function useMintWareProgram() {
 
   const accounts = useQuery({
     queryKey: ['mint-ware', 'all', { cluster }],
-    queryFn: () => program.account.rewards.all(),
+    queryFn: () => program.account.projectData.all(),
   });
 
   const getProgramAccount = useQuery({
@@ -33,16 +33,16 @@ export function useMintWareProgram() {
 
   const initialize = useMutation({
     mutationKey: ['mint-ware', 'create', { cluster }],
-    mutationFn: ({keypair, name, description} : {keypair: Keypair, name: string, description: string}) =>
+    mutationFn: ({name, description, reward_percent, amount}: {name: string, description: string, reward_percent: Number, amount: BigInt }) =>
       program.methods
-        .create(name, description)
+        .create({name, description, reward_percent, amount})
         //TODO: fugure our how to reuse signer for PDA creation
         // .accountsStrict({
         //   rewards: associatedAddress,
         //   user: keypair.publicKey,
         //   systemProgram : SystemProgram,
         // })
-       .accounts({ user : keypair.publicKey })
+       .accounts()
        .signers([keypair])
         .rpc(),
     onSuccess: (signature) => {
@@ -69,7 +69,7 @@ export function useMintWareProgramAccount({ account }: { account: PublicKey }) {
 
   const accountQuery = useQuery({
     queryKey: ['mint-ware', 'fetch', { cluster, account }],
-    queryFn: () => program.account.rewards.fetch(account),
+    queryFn: () => program.account.projectData.fetch(account),
   });
 
 
