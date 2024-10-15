@@ -33,11 +33,17 @@ export function useMintWareProgram() {
 
   const initialize = useMutation({
     mutationKey: ['mint-ware', 'create', { cluster }],
-    mutationFn: (keypair: Keypair) =>
+    mutationFn: ({keypair, name, description} : {keypair: Keypair, name: string, description: string}) =>
       program.methods
-        .create("Test Rewards Pool", "Test Description")
-        .accounts({ user : keypair.publicKey })
-        .signers([keypair])
+        .create(name, description)
+        //TODO: fugure our how to reuse signer for PDA creation
+        // .accountsStrict({
+        //   rewards: associatedAddress,
+        //   user: keypair.publicKey,
+        //   systemProgram : SystemProgram,
+        // })
+       .accounts({ user : keypair.publicKey })
+       .signers([keypair])
         .rpc(),
     onSuccess: (signature) => {
       transactionToast(signature);
@@ -65,6 +71,32 @@ export function useMintWareProgramAccount({ account }: { account: PublicKey }) {
     queryKey: ['mint-ware', 'fetch', { cluster, account }],
     queryFn: () => program.account.rewards.fetch(account),
   });
+
+
+  // template for another endpoints, create is implemented in useMintWareProgram hook
+  //
+  // const createMutation = useMutation({
+  //   mutationKey: ['mint-ware', 'create', { cluster, account }],
+  //   mutationFn: ({name, description} : {name: string, description: string} ) =>
+  //     program.methods.create(name, description).accounts({ user: account}).rpc(),
+  //   onSuccess: (tx) => {
+  //     transactionToast(tx);
+  //     return accounts.refetch();
+  //   },
+  // });
+
+
+  //TODO: implement close() 
+  //
+  // const closeMutation = useMutation({
+  //   mutationKey: ['mint-ware', 'close', { cluster, account }],
+  //   mutationFn: () =>
+  //     program.methods.close().accounts({ mintWare: account }).rpc(),
+  //   onSuccess: (tx) => {
+  //     transactionToast(tx);
+  //     return accounts.refetch();
+  //   },
+  // });
 
   return {
     accountQuery,
