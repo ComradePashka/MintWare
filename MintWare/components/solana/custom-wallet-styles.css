@@ -1,0 +1,7 @@
+body .wallet-adapter-button-trigger {
+  background-color: #5e74ed !important;
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 16px !important;
+  border-bottom-left-radius: 16px !important;
+  border-bottom-right-radius: 8px !important;
+}
