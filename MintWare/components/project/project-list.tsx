@@ -138,7 +138,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -212,7 +212,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -288,7 +288,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -362,7 +362,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -436,7 +436,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -510,7 +510,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -584,7 +584,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -658,7 +658,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -732,7 +732,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -806,7 +806,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -880,7 +880,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -954,7 +954,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
@@ -1026,7 +1026,7 @@ export default function ProjectList() {
                       $23K
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+                      <button className="btn btn-sm btn-primary btn-outline rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px] opacity-50 cursor-not-allowed">
                         Subscribe
                       </button>
                     </td>
