@@ -17,12 +17,12 @@ export function UiLayout({
   links: { label: string; path: string; dev?: boolean }[];
 }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen w-full flex flex-col">
       <Navbar links={links} />
       <ClusterChecker>
         <AccountChecker />
       </ClusterChecker>
-      <div className="flex-grow mx-4 lg:mx-auto">
+      <div className="w-full flex-grow">
         <Suspense
           fallback={
             <div className="text-center my-32">
