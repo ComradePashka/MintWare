@@ -1,8 +1,8 @@
 'use client';
 
-import { getMintWareProgram, getMintWareProgramId } from '@mint-ware/anchor';
-import { useConnection } from '@solana/wallet-adapter-react';
-import { Cluster, Keypair, PublicKey } from '@solana/web3.js';
+import { DEV_USDCOIN_MINT, getMintWareProgram, getMintWareProgramId, getProjectATA, getProjectPDA, settingsPDA } from '@mint-ware/anchor';
+import { useAnchorWallet, useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { Cluster, PublicKey } from '@solana/web3.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import toast from 'react-hot-toast';
@@ -11,6 +11,7 @@ import { useAnchorProvider } from '../solana/solana-provider';
 import { useTransactionToast } from '../ui/ui-layout';
 
 export function useMintWareProgram() {
+  const { publicKey, sendTransaction, wallet } = useWallet();
   const { connection } = useConnection();
   const { cluster } = useCluster();
   const transactionToast = useTransactionToast();
@@ -21,9 +22,12 @@ export function useMintWareProgram() {
   );
   const program = getMintWareProgram(provider);
 
+  const projectPDA = getProjectPDA(publicKey, DEV_USDCOIN_MINT)
+  const projectATA = getProjectATA(publicKey, DEV_USDCOIN_MINT)
+
   const accounts = useQuery({
     queryKey: ['mint-ware', 'all', { cluster }],
-    queryFn: () => program.account.projectData.all(),
+    queryFn: () => program.account.project.all(),
   });
 
   const getProgramAccount = useQuery({
@@ -33,18 +37,21 @@ export function useMintWareProgram() {
 
   const initialize = useMutation({
     mutationKey: ['mint-ware', 'create', { cluster }],
-    mutationFn: ({name, description, reward_percent, amount}: {name: string, description: string, reward_percent: Number, amount: BigInt }) =>
-      program.methods
-        .create({name, description, reward_percent, amount})
-        //TODO: fugure our how to reuse signer for PDA creation
-        // .accountsStrict({
-        //   rewards: associatedAddress,
-        //   user: keypair.publicKey,
-        //   systemProgram : SystemProgram,
-        // })
-       .accounts()
-       .signers([keypair])
-        .rpc(),
+    mutationFn: ({name, description, rewardPercent, amount}: {name: string, description: string, rewardPercent: any, amount: BigInt }) =>
+    {
+      console.log(name, description, rewardPercent, amount)
+      return program.methods
+        .projectInit(name, description, rewardPercent, amount)
+        .accountsPartial({
+          project: projectPDA,
+          settings: settingsPDA,
+          poolAta: projectATA,
+          tokenMint: DEV_USDCOIN_MINT,
+          signerAta: senderATA,
+        })  
+        .signers([publicKey])
+        .rpc()
+    },
     onSuccess: (signature) => {
       transactionToast(signature);
       return accounts.refetch();
@@ -69,7 +76,7 @@ export function useMintWareProgramAccount({ account }: { account: PublicKey }) {
 
   const accountQuery = useQuery({
     queryKey: ['mint-ware', 'fetch', { cluster, account }],
-    queryFn: () => program.account.projectData.fetch(account),
+    queryFn: () => program.account.project.fetch(account),
   });
 
 

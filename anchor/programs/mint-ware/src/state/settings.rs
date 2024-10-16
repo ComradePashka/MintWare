@@ -2,12 +2,13 @@ use anchor_lang::prelude::*;
 
 
 #[account]
-pub struct SettingsData {
+pub struct Settings {
     pub min_reward_percent: u8,
     pub max_reward_percent: u8,
+    pub reward_authority: Pubkey
 }
 
-impl SettingsData {
+impl Settings {
 
     //TODO: add any extra implementations here
 

@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 
 #[account]
-pub struct ProjectData {
+pub struct Project {
     pub authority: Pubkey,
     pub name: String,
     pub description: String,
@@ -12,7 +12,7 @@ pub struct ProjectData {
     // pub last_login: i64,
 }
 
-impl ProjectData {
+impl Project {
     pub fn print(&mut self) -> Result<()> {
         // Note that logging costs a lot of compute. So don't use it too much.
         msg!(

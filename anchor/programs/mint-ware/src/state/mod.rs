@@ -1,2 +1,2 @@
-pub mod project_data;
-pub mod settings_data;
+pub mod project;
+pub mod settings;

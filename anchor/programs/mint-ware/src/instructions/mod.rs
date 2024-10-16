@@ -1,6 +1,6 @@
 //! All instructions
-pub mod mintware_settings;
-pub mod init_project;
+pub mod settings_init;
+pub mod project_init;
 
-pub use mintware_settings::*;
-pub use init_project::*;
+pub use settings_init::*;
+pub use project_init::*;

@@ -14,16 +14,57 @@ export type Mintware = {
   },
   "instructions": [
     {
-      "name": "create",
+      "name": "fund",
       "discriminator": [
-        24,
-        30,
-        200,
-        40,
-        5,
-        28,
-        7,
-        119
+        218,
+        188,
+        111,
+        221,
+        152,
+        113,
+        174,
+        7
+      ],
+      "accounts": [
+        {
+          "name": "sender",
+          "signer": true
+        },
+        {
+          "name": "senderAta",
+          "writable": true
+        },
+        {
+          "name": "rewardsAta",
+          "writable": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "projectInit",
+      "discriminator": [
+        168,
+        255,
+        1,
+        195,
+        140,
+        64,
+        219,
+        220
       ],
       "accounts": [
         {
@@ -46,6 +87,10 @@ export type Mintware = {
               {
                 "kind": "account",
                 "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "tokenMint"
               }
             ]
           }
@@ -87,7 +132,7 @@ export type Mintware = {
               },
               {
                 "kind": "account",
-                "path": "signer"
+                "path": "project"
               }
             ]
           }
@@ -131,80 +176,51 @@ export type Mintware = {
           "type": "u64"
         }
       ]
-    },
-    {
-      "name": "fund",
-      "discriminator": [
-        218,
-        188,
-        111,
-        221,
-        152,
-        113,
-        174,
-        7
-      ],
-      "accounts": [
-        {
-          "name": "sender",
-          "signer": true
-        },
-        {
-          "name": "senderAta",
-          "writable": true
-        },
-        {
-          "name": "rewardsAta",
-          "writable": true
-        },
-        {
-          "name": "systemProgram",
-          "address": "11111111111111111111111111111111"
-        },
-        {
-          "name": "tokenProgram",
-          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
-        }
-      ],
-      "args": [
-        {
-          "name": "amount",
-          "type": "u64"
-        }
-      ]
     }
   ],
   "accounts": [
     {
-      "name": "projectData",
+      "name": "project",
       "discriminator": [
-        248,
-        128,
-        251,
-        0,
-        71,
-        204,
-        69,
-        32
+        205,
+        168,
+        189,
+        202,
+        181,
+        247,
+        142,
+        19
       ]
     },
     {
-      "name": "settingsData",
+      "name": "settings",
       "discriminator": [
-        222,
-        170,
-        226,
-        57,
-        191,
-        58,
-        115,
-        25
+        223,
+        179,
+        163,
+        190,
+        177,
+        224,
+        67,
+        173
       ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "invalidRange",
+      "msg": "ivalid range"
+    },
+    {
+      "code": 6001,
+      "name": "wrongAuthority",
+      "msg": "Wrong Authority"
     }
   ],
   "types": [
     {
-      "name": "projectData",
+      "name": "project",
       "type": {
         "kind": "struct",
         "fields": [
@@ -232,7 +248,7 @@ export type Mintware = {
       }
     },
     {
-      "name": "settingsData",
+      "name": "settings",
       "type": {
         "kind": "struct",
         "fields": [
@@ -243,6 +259,10 @@ export type Mintware = {
           {
             "name": "maxRewardPercent",
             "type": "u8"
+          },
+          {
+            "name": "rewardAuthority",
+            "type": "pubkey"
           }
         ]
       }

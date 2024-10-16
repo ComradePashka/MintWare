@@ -48,8 +48,8 @@ export function MintWareCreateProjectModal({
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [rewardPercent, setRewardPercent] = useState('');
-  const [amount, setAmount] = useState('');
+  const [rewardPercent, setRewardPercent] = useState<Number>(5);
+  const [amount, setAmount] = useState<BigInt>(BigInt(0));
 
   console.log("WALLLLLLET", publicKey, sendTransaction, wallet)
 
@@ -59,7 +59,7 @@ export function MintWareCreateProjectModal({
       hide={hideModal}
       show={show}
       submit={() => {
-        initialize.mutateAsync({keypair: Keypair.generate(), name, description, rewardPercent, })
+        initialize.mutateAsync({name, description, rewardPercent: rewardPercent, amount})
         // hideModal();
       }}
       submitLabel="Save"
@@ -127,10 +127,12 @@ function MintWareCard({ account }: { account: PublicKey }) {
     accountQuery,
   } = useMintWareProgramAccount({ account });
 
-  const count = useMemo(
-    () => accountQuery.data?.rewardsPool ?? 0,
-    [accountQuery.data?.rewardsPool]
-  );
+  //TODO: remove when not needed!
+  // const count = useMemo(
+  //   () => accountQuery.data?.rewardsPool ?? 0,
+  //   [accountQuery.data?.rewardsPool]
+  // );
+  const count = 2;
 
   return accountQuery.isLoading ? (
     <span className="loading loading-spinner loading-lg"></span>

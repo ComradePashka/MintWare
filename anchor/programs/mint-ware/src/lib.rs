@@ -4,39 +4,26 @@ pub use anchor_lang::prelude::*;
 use anchor_lang::solana_program::entrypoint::ProgramResult;
 use anchor_spl::token::{Token, TokenAccount};
 pub mod instructions;
+pub mod errors;
 pub mod state;
+pub mod constants;
+
 use instructions::*;
 //use instructions::CreateProject;
 
 declare_id!("HCikGfj5AnDHFU6uN5XHuUmNuAqFVexNksaEYh6SzJVv" );
 
-
 #[program]
 pub mod mintware {
 
 //TODO: cleanup afer testing
-
     use anchor_lang::solana_program::program::invoke;
     use anchor_spl::token::spl_token;
-//    use instructions::InitProject;
-//    use crate::instructions::init_project;
-
     use super::*;
 
-    pub fn create(ctx: Context<CreateProject>, name: String, description: String, reward_percent: u8, amount:u64) -> Result<()> {
-        init_project::init_project(ctx, name, description, reward_percent, amount)
+    pub fn project_init(ctx: Context<ProjectInit>, name: String, description: String, reward_percent: u8, amount:u64) -> Result<()> {
+        project_init::project_init(ctx, name, description, reward_percent, amount)
     }
-
-//TODO: cleanup afer testing
-
-    // let rewards = &mut ctx.accounts.rewards;
-    // rewards.name = name;
-    // rewards.description = description;
-    // rewards.rewards_pool = 0;
-    // rewards.admin = *ctx.accounts.user.key;
-    // rewards.rewards_pool_mint_address = *ctx.accounts.token_program.to_account_info().key;
-    // Ok(())
-
 
     pub fn fund(ctx: Context<Fund>, amount: u64) -> ProgramResult {
 //        let _rewards = &mut ctx.accounts.rewards;
@@ -90,12 +77,3 @@ pub struct Fund<'info> {
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, Token>,
 }
-
-// #[account]
-// pub struct Rewards {
-//     pub admin: Pubkey,
-//     pub name: String,
-//     pub description: String,
-//     pub rewards_pool: u64,
-//     pub rewards_pool_mint_address: Pubkey, // For validations later (To be added later)
-// }

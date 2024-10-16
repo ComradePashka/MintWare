@@ -1,9 +1,12 @@
-use crate::state::project_data::ProjectData;
-use crate::state::settings_data::SettingsData;
+use crate::constants::{PROJECT_PDA_SEED, SETTINGS_PDA_SEED, POOL_PDA_SEED};
+
+use crate::state::project::Project;
+use crate::state::settings::Settings;
 use anchor_lang::prelude::*;
 use anchor_spl::token::{Mint, Token, TokenAccount, Transfer};
 
-pub fn init_project(ctx: Context<CreateProject>, name: String, description: String, reward_percent: u8, amount: u64) -> Result<()> {
+
+pub fn project_init(ctx: Context<ProjectInit>, name: String, description: String, reward_percent: u8, amount: u64) -> Result<()> {
 
     let project = &mut ctx.accounts.project;
     project.authority = ctx.accounts.signer.key();
@@ -15,8 +18,9 @@ pub fn init_project(ctx: Context<CreateProject>, name: String, description: Stri
     msg!("Initialized new Project '{}' with reward {}", name, reward_percent);
 
     let inner = vec![
-        b"project".as_ref(),
+        PROJECT_PDA_SEED,
         ctx.accounts.signer.key.as_ref(),
+        project.token_mint.as_ref()
     ];
     let outer = vec![inner.as_slice()];
 
@@ -38,36 +42,37 @@ pub fn init_project(ctx: Context<CreateProject>, name: String, description: Stri
 }
 
 #[derive(Accounts)]
-pub struct CreateProject<'info> {
+pub struct ProjectInit<'info> {
     #[account(
         init,
         payer = signer,
-        space = 1000, // 8+32+x+1+8+8+8 But taking 1000 to have space to expand easily.
-        seeds = [b"project".as_ref(), signer.key().as_ref()],
+        space = 1000, // 8 + ? //TODO: set size using https://docs.rs/anchor-lang/latest/anchor_lang/derive.InitSpace.html
+        seeds = [PROJECT_PDA_SEED, signer.key().as_ref(), token_mint.key().as_ref()],
         bump,
     )]
-    pub project: Account<'info, ProjectData>,
+    pub project: Account<'info, Project>,
 
+    //TODO: find global init or workaround with CPI?
     #[account(
         init_if_needed,
         payer = signer,
-        space = 1000, // 8 + 8 for anchor account discriminator and the u64. Using 1000 to have space to expand easily.
-        seeds = [b"settings".as_ref()],
+        space = 56, // 8 + (8 + 8) . +32 Pubkey for reward_auth
+        seeds = [SETTINGS_PDA_SEED],
         bump,
     )]
-    pub settings: Account<'info, SettingsData>,
+    pub settings: Account<'info, Settings>,
 
     #[account(
         init,
         payer = signer,
-        seeds=[b"pool".as_ref(), signer.key().as_ref(),],
+        seeds=[POOL_PDA_SEED, project.key().as_ref()],
         bump,
-        token::mint=token_mint,
+        token::mint=token_mint, //TODO: decide if ATA is really required?
         token::authority=project,
     )]
-    pool_ata: Account<'info, TokenAccount>,
+    pub pool_ata: Account<'info, TokenAccount>,
 
-    token_mint: Account<'info, Mint>, 
+    pub token_mint: Account<'info, Mint>,
 
     #[account(
         mut,
