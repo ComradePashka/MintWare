@@ -15,6 +15,7 @@ import { ReactNode, useCallback, useMemo } from 'react';
 import { useCluster } from '../cluster/cluster-data-access';
 
 require('@solana/wallet-adapter-react-ui/styles.css');
+import './custom-wallet-styles.css';
 
 export const WalletButton = dynamic(
   async () =>
