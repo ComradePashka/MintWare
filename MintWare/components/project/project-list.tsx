@@ -4,6 +4,7 @@ import { Project } from '@prisma/client';
 import Image from 'next/image';
 
 import useSWR from 'swr';
+import Pagination from './components/pagination';
 
 //@ts-expect-error need fetcher
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -1034,6 +1035,7 @@ export default function ProjectList() {
                 </tbody>
               </table>
             </div>
+            <Pagination />
           </div>
         </div>
       </div>

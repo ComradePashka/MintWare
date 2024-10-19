@@ -5,14 +5,14 @@ import Image from 'next/image';
 export default function CoinModalButtonComponent(): ReactElement {
   return (
     <div className="dropdown dropdown-bottom">
-      <div tabIndex={0} role="button" className="btn m-1">
+      <div tabIndex={0} role="button" className="btn text-neutral m-1">
         <Image
           alt="Coin"
           src="/assets/coin-logo/solana-logo.png"
           width={24}
           height={24}
         />
-        295
+        SOL
       </div>
       <ul
         tabIndex={0}
