@@ -33,7 +33,7 @@ export default function Navbar({ links }: NavbarProps): ReactElement {
         </ul>
       </div>
       <div className="flex-none space-x-2">
-        <Link href="/#roadmap" className="btn btn-base text-neutral">
+        <Link href="/create-project" className="btn btn-base text-neutral">
           Create Project
         </Link>
         <CoinModalButtonComponent />
