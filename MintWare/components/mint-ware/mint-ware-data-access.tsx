@@ -22,8 +22,8 @@ export function useMintWareProgram() {
   );
   const program = getMintWareProgram(provider);
 
-  const projectPDA = getProjectPDA(publicKey, DEV_USDCOIN_MINT)
-  const projectATA = getProjectATA(publicKey, DEV_USDCOIN_MINT)
+  //const projectPDA = getProjectPDA(publicKey, DEV_USDCOIN_MINT)
+  //const projectATA = getProjectATA(publicKey, DEV_USDCOIN_MINT)
 
   const accounts = useQuery({
     queryKey: ['mint-ware', 'all', { cluster }],
@@ -43,13 +43,13 @@ export function useMintWareProgram() {
       return program.methods
         .projectInit(name, description, rewardPercent, amount)
         .accountsPartial({
-          project: projectPDA,
+          //project: projectPDA,
           settings: settingsPDA,
-          poolAta: projectATA,
+          //poolAta: projectATA,
           tokenMint: DEV_USDCOIN_MINT,
-          signerAta: senderATA,
+          //signerAta: senderATA,
         })  
-        .signers([publicKey])
+        //.signers([publicKey])
         .rpc()
     },
     onSuccess: (signature) => {
