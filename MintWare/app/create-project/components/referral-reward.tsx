@@ -1,4 +1,6 @@
-export default function ReferralReward() {
+import { ReactElement } from 'react';
+
+export default function ReferralReward(): ReactElement {
   return (
     <div className="card w-[100%] bg-base-100 w-96 shadow-md rounded rounded-tl-[16px] rounded-tr-[40px] rounded-bl-[40px] rounded-br-[16px]">
       <div className="card-body">
