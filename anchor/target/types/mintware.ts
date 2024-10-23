@@ -55,6 +55,31 @@ export type Mintware = {
       ]
     },
     {
+      "name": "projectClose",
+      "discriminator": [
+        40,
+        179,
+        102,
+        74,
+        77,
+        53,
+        140,
+        6
+      ],
+      "accounts": [
+        {
+          "name": "project",
+          "writable": true
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "projectInit",
       "discriminator": [
         168,
@@ -91,27 +116,6 @@ export type Mintware = {
               {
                 "kind": "account",
                 "path": "tokenMint"
-              }
-            ]
-          }
-        },
-        {
-          "name": "settings",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  115,
-                  101,
-                  116,
-                  116,
-                  105,
-                  110,
-                  103,
-                  115
-                ]
               }
             ]
           }
@@ -191,26 +195,13 @@ export type Mintware = {
         142,
         19
       ]
-    },
-    {
-      "name": "settings",
-      "discriminator": [
-        223,
-        179,
-        163,
-        190,
-        177,
-        224,
-        67,
-        173
-      ]
     }
   ],
   "errors": [
     {
       "code": 6000,
-      "name": "invalidRange",
-      "msg": "ivalid range"
+      "name": "rewardOutOfRange",
+      "msg": "Reward out of range"
     },
     {
       "code": 6001,
@@ -243,26 +234,6 @@ export type Mintware = {
           {
             "name": "rewardPercent",
             "type": "u8"
-          }
-        ]
-      }
-    },
-    {
-      "name": "settings",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "minRewardPercent",
-            "type": "u8"
-          },
-          {
-            "name": "maxRewardPercent",
-            "type": "u8"
-          },
-          {
-            "name": "rewardAuthority",
-            "type": "pubkey"
           }
         ]
       }

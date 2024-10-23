@@ -12,7 +12,16 @@ export const PROJECT_PDA_SEED = "project";
 export const POOL_PDA_SEED = "pool";
 
 export const FALLBACK_REWARD_AUTHORITY: PublicKey = new PublicKey("7ZVEnYAR5KHNAhERDGnmuVLSUid4Dq3mCqMecAdXP4UY");
-export const DEV_USDCOIN_MINT: PublicKey = new PublicKey("GrNg1XM2ctzeE2mXxXCfhcTUbejM8Z4z4wNVTy2FjMEz");
+
+//TODO: DO NOI MESS UP!
+//
+// USD Coin: 4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU
+// Mint authority: GrNg1XM2ctzeE2mXxXCfhcTUbejM8Z4z4wNVTy2FjMEz
+//
+// USD Coin Dev: Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr (both address and Mint authority)
+//
+
+export const DEV_USDCOIN_MINT: PublicKey = new PublicKey("Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr");
 
 
 // Re-export the generated IDL and type
@@ -61,7 +70,6 @@ export function getProjectATA(owner: PublicKey, token_mint: PublicKey) {
     [
       Buffer.from(POOL_PDA_SEED, "utf8"),
       getProjectPDA(owner, token_mint).toBuffer(),
-      token_mint.toBuffer()
     ],
     MINT_WARE_PROGRAM_ID
   )

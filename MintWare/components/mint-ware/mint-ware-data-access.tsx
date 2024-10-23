@@ -2,16 +2,20 @@
 
 import { DEV_USDCOIN_MINT, getMintWareProgram, getMintWareProgramId, getProjectATA, getProjectPDA, settingsPDA } from '@mint-ware/anchor';
 import { useAnchorWallet, useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { Cluster, PublicKey } from '@solana/web3.js';
+import { Cluster, Keypair, PublicKey } from '@solana/web3.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { useCluster } from '../cluster/cluster-data-access';
 import { useAnchorProvider } from '../solana/solana-provider';
 import { useTransactionToast } from '../ui/ui-layout';
+import { getAssociatedTokenAddressSync, TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { BN } from '@coral-xyz/anchor';
+import { SYSTEM_PROGRAM_ID } from '@coral-xyz/anchor/dist/cjs/native/system';
+import { WalletNotConnectedError } from '@solana/wallet-adapter-base';
 
 export function useMintWareProgram() {
-  const { publicKey, sendTransaction, wallet } = useWallet();
+  const { publicKey, sendTransaction, signTransaction, wallet } = useWallet();
   const { connection } = useConnection();
   const { cluster } = useCluster();
   const transactionToast = useTransactionToast();
@@ -22,8 +26,12 @@ export function useMintWareProgram() {
   );
   const program = getMintWareProgram(provider);
 
+  if (!publicKey) throw new WalletNotConnectedError();
+
+
   const projectPDA = getProjectPDA(publicKey, DEV_USDCOIN_MINT)
-  const projectATA = getProjectATA(publicKey, DEV_USDCOIN_MINT)
+  const poolATA = getProjectATA(publicKey, DEV_USDCOIN_MINT)
+  const signerATA = getAssociatedTokenAddressSync(DEV_USDCOIN_MINT, publicKey)
 
   const accounts = useQuery({
     queryKey: ['mint-ware', 'all', { cluster }],
@@ -37,27 +45,50 @@ export function useMintWareProgram() {
 
   const initialize = useMutation({
     mutationKey: ['mint-ware', 'create', { cluster }],
-    mutationFn: ({name, description, rewardPercent, amount}: {name: string, description: string, rewardPercent: any, amount: BigInt }) =>
+    mutationFn: async ({name, description, rewardPercent, amount}: {name: string, description: string, rewardPercent: number, amount: number }) =>
     {
       console.log(name, description, rewardPercent, amount)
-      return program.methods
-        .projectInit(name, description, rewardPercent, amount)
-        .accountsPartial({
-          project: projectPDA,
-          settings: settingsPDA,
-          poolAta: projectATA,
-          tokenMint: DEV_USDCOIN_MINT,
-          signerAta: senderATA,
-        })  
-        .signers([publicKey])
-        .rpc()
+
+      let tx =  await program.methods
+      .projectInit(name, description, rewardPercent, new BN(amount))
+      .accountsStrict({
+        project: projectPDA,
+        poolAta: poolATA,
+        tokenMint: DEV_USDCOIN_MINT,
+        signerAta: signerATA,
+        signer: publicKey,
+        systemProgram: SYSTEM_PROGRAM_ID,
+        tokenProgram: TOKEN_PROGRAM_ID
+      })
+      .transaction()
+
+      console.log("wallet", wallet)
+      console.log("tx", tx)
+
+      // tx.feePayer = publicKey
+      // tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash
+
+//      const signedTx = await signTransaction(tx)
+//      const txId = await connection.sendRawTransaction(signedTx.serialize())
+      let tx2 = await sendTransaction(tx, connection, {skipPreflight: true})
+      console.log("Result:", tx2)
+      return await connection.confirmTransaction(tx2)
+
+
+      // const {
+      //   context: { slot: minContextSlot },
+      //   value: { blockhash, lastValidBlockHeight }
+      // } = await connection.getLatestBlockhashAndContext()
+
+      // const signature = await sendTransaction(tx, connection) // , { minContextSlot }
+      // return await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature})
     },
-    onSuccess: (signature) => {
-      transactionToast(signature);
+    onSuccess: (tx) => {
+      transactionToast("TX" + tx);
       return accounts.refetch();
     },
-    onError: () =>
-      toast.error('Failed to initialize account'),
+    onError: (e) =>
+      toast.error('Failed to initialize account' + e),
   });
 
   return {

@@ -21,9 +21,17 @@ pub mod mintware {
     use anchor_spl::token::spl_token;
     use super::*;
 
-    pub fn project_init(ctx: Context<ProjectInit>, name: String, description: String, reward_percent: u8, amount:u64) -> Result<()> {
-        project_init::project_init(ctx, name, description, reward_percent, amount)
+    pub fn project_init(ctx: Context<ProjectInit>, name: String, description: String, reward_percent: u8, amount: u64) -> Result<()> {
+        project::project_init(ctx, name, description, reward_percent, amount)
     }
+
+    pub fn project_close(ctx: Context<ProjectClose>) -> Result<()> {
+        project::project_close(ctx)
+    }
+
+    // pub fn project_init(ctx: Context<ProjectInit>, name: String, description: String, reward_percent: u8, amount:u64) -> Result<()> {
+    //     project::project_init(ctx, name, description, reward_percent, amount)
+    // }
 
     pub fn fund(ctx: Context<Fund>, amount: u64) -> ProgramResult {
 //        let _rewards = &mut ctx.accounts.rewards;

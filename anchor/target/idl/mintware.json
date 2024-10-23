@@ -49,6 +49,31 @@
       ]
     },
     {
+      "name": "project_close",
+      "discriminator": [
+        40,
+        179,
+        102,
+        74,
+        77,
+        53,
+        140,
+        6
+      ],
+      "accounts": [
+        {
+          "name": "project",
+          "writable": true
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "project_init",
       "discriminator": [
         168,
@@ -85,27 +110,6 @@
               {
                 "kind": "account",
                 "path": "token_mint"
-              }
-            ]
-          }
-        },
-        {
-          "name": "settings",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  115,
-                  101,
-                  116,
-                  116,
-                  105,
-                  110,
-                  103,
-                  115
-                ]
               }
             ]
           }
@@ -185,26 +189,13 @@
         142,
         19
       ]
-    },
-    {
-      "name": "Settings",
-      "discriminator": [
-        223,
-        179,
-        163,
-        190,
-        177,
-        224,
-        67,
-        173
-      ]
     }
   ],
   "errors": [
     {
       "code": 6000,
-      "name": "InvalidRange",
-      "msg": "ivalid range"
+      "name": "RewardOutOfRange",
+      "msg": "Reward out of range"
     },
     {
       "code": 6001,
@@ -237,26 +228,6 @@
           {
             "name": "reward_percent",
             "type": "u8"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Settings",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "min_reward_percent",
-            "type": "u8"
-          },
-          {
-            "name": "max_reward_percent",
-            "type": "u8"
-          },
-          {
-            "name": "reward_authority",
-            "type": "pubkey"
           }
         ]
       }

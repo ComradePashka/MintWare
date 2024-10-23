@@ -10,6 +10,7 @@ import {
 } from './mint-ware-data-access';
 import { ClusterNetwork } from '../cluster/cluster-data-access';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { BN } from '@coral-xyz/anchor';
 
 export function MintWareCreate() {
   const { initialize } = useMintWareProgram();
@@ -48,10 +49,8 @@ export function MintWareCreateProjectModal({
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [rewardPercent, setRewardPercent] = useState<Number>(5);
-  const [amount, setAmount] = useState<BigInt>(BigInt(0));
-
-  console.log("WALLLLLLET", publicKey, sendTransaction, wallet)
+  const [rewardPercent, setRewardPercent] = useState<number>(5);
+  const [amount, setAmount] = useState<number>(0);
 
   return (
     <AppModal
@@ -59,7 +58,7 @@ export function MintWareCreateProjectModal({
       hide={hideModal}
       show={show}
       submit={() => {
-        initialize.mutateAsync({name, description, rewardPercent: rewardPercent, amount})
+        initialize.mutateAsync({name, description, rewardPercent, amount})
         // hideModal();
       }}
       submitLabel="Save"
@@ -77,6 +76,20 @@ export function MintWareCreateProjectModal({
         className="input input-bordered w-full"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+      />
+      <input
+        type="number"
+        placeholder="Reward percent (5-100)"
+        className="input input-bordered w-full"
+        value={rewardPercent.toString()}
+        onChange={(e) => setRewardPercent(parseInt(e.target.value))}
+      />
+      <input
+        type="number"
+        placeholder="Amount"
+        className="input input-bordered w-full"
+        value={amount.toString()}
+        onChange={(e) => setAmount(parseInt(e.target.value))}
       />
     </AppModal>
   );
