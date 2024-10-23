@@ -32,6 +32,25 @@ export default function AddTokenModal(): ReactElement {
               </button>
             </label>
           </div>
+          <div className="flex flex-row w-full gap-2 mt-4">
+            <button className="btn btn-sm btn-outline h-[38px] btn-primary rounded-full hover:!text-white">
+              25%
+            </button>
+            <button className="btn btn-sm btn-outline h-[38px] btn-primary rounded-full hover:!text-white">
+              50%
+            </button>
+            <button className="btn btn-sm btn-outline h-[38px] btn-primary rounded-full hover:!text-white">
+              75%
+            </button>
+            <button className="btn btn-sm btn-outline h-[38px] btn-primary rounded-full hover:!text-white">
+              100%
+            </button>
+          </div>
+          <div className="flex w-full mt-4">
+            <button className="btn btn-md btn-primary w-full text-white rounded rounded-tl-[8px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-[8px]">
+              Add Tokens
+            </button>
+          </div>
         </div>
       </dialog>
     </>
