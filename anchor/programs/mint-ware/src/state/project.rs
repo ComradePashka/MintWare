@@ -1,15 +1,33 @@
 use anchor_lang::prelude::*;
 
+// `id` INTEGER NOT NULL AUTO_INCREMENT,
+// `authority` VARCHAR(64) NOT NULL,
+// `name` VARCHAR(64) NOT NULL,
+// `description` VARCHAR(128) NOT NULL,
+// `token_mint` VARCHAR(64) NOT NULL,
+// `reward_percent` TINYINT NOT NULL DEFAULT 5,
+// `tx` VARCHAR(128) NOT NULL,
+// `tx_confirmed_at` TIMESTAMP(0) NULL,
+
+
 #[account]
+#[derive(InitSpace, Debug)]
 pub struct Project {
-    pub authority: Pubkey,
+    pub authority: Pubkey, // 32
+
+    #[max_len(64)]
     pub name: String,
+
+    #[max_len(128)]
     pub description: String,
-    pub token_mint: Pubkey,
+
+    pub token_mint: Pubkey, //32
     // pub pool_ata: Pubkey,
     // pub signer_ata: Pubkey,
     pub reward_percent: u8
     // pub last_login: i64,
+
+    // 32 + 64 + 128 + 32 + 1 = 257 
 }
 
 impl Project {
